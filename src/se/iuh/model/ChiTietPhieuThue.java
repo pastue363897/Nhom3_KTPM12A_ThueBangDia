@@ -11,19 +11,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ChiTietPhieuThue")
-@IdClass(PK_Dia_PhieuThue.class)
+//@IdClass(PK_Dia_PhieuThue.class)
 public class ChiTietPhieuThue {
 	@Id
+	private String maCTPT;
 	@ManyToOne
 	@JoinColumn(name = "diaThue", referencedColumnName = "maDia")
 	private Dia diaThue;
-	@Id
 	@ManyToOne
 	@JoinColumn(name = "phieuThue", referencedColumnName = "maPhieuThue")
 	private PhieuThue phieuThue;
 	private double giaThue;
 	private double phiTreHan;
 	private Date hanTraDia;
+	public String getMaCTPT() {
+		return maCTPT;
+	}
+	public void setMaCTPT(String maCTPT) {
+		this.maCTPT = maCTPT;
+	}
 	public Dia getDiaThue() {
 		return diaThue;
 	}
@@ -54,8 +60,10 @@ public class ChiTietPhieuThue {
 	public void setHanTraDia(Date hanTraDia) {
 		this.hanTraDia = hanTraDia;
 	}
-	public ChiTietPhieuThue(Dia diaThue, PhieuThue phieuThue, double giaThue, double phiTreHan, Date hanTraDia) {
+	public ChiTietPhieuThue(String maCTPT, Dia diaThue, PhieuThue phieuThue, double giaThue, double phiTreHan,
+			Date hanTraDia) {
 		super();
+		this.maCTPT = maCTPT;
 		this.diaThue = diaThue;
 		this.phieuThue = phieuThue;
 		this.giaThue = giaThue;
@@ -64,13 +72,13 @@ public class ChiTietPhieuThue {
 	}
 	public ChiTietPhieuThue() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((diaThue == null) ? 0 : diaThue.hashCode());
-		result = prime * result + ((phieuThue == null) ? 0 : phieuThue.hashCode());
+		result = prime * result + ((maCTPT == null) ? 0 : maCTPT.hashCode());
 		return result;
 	}
 	@Override
@@ -82,21 +90,12 @@ public class ChiTietPhieuThue {
 		if (getClass() != obj.getClass())
 			return false;
 		ChiTietPhieuThue other = (ChiTietPhieuThue) obj;
-		if (diaThue == null) {
-			if (other.diaThue != null)
+		if (maCTPT == null) {
+			if (other.maCTPT != null)
 				return false;
-		} else if (!diaThue.equals(other.diaThue))
-			return false;
-		if (phieuThue == null) {
-			if (other.phieuThue != null)
-				return false;
-		} else if (!phieuThue.equals(other.phieuThue))
+		} else if (!maCTPT.equals(other.maCTPT))
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "ChiTietPhieuThue [diaThue=" + diaThue + ", phieuThue=" + phieuThue + ", giaThue=" + giaThue
-				+ ", phiTreHan=" + phiTreHan + ", hanTraDia=" + hanTraDia + "]";
-	}
+	
 }
