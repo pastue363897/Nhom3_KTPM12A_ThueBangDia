@@ -17,6 +17,7 @@ public class TuaDia {
 	private int loaiTua;
 	private int soNgayThue;
 	private double phiTreHan;
+	private double giaThue;
 	@OneToMany(mappedBy = "tuaDia")
 	private List<Dia> listDia;
 	public String getMaTua() {
@@ -61,7 +62,13 @@ public class TuaDia {
 	public void setListDia(List<Dia> listDia) {
 		this.listDia = listDia;
 	}
-	public TuaDia(String maTua, String tenTua, String moTa, int loaiTua, int soNgayThue, double phiTreHan) {
+	public double getGiaThue() {
+		return giaThue;
+	}
+	public void setGiaThue(double giaThue) {
+		this.giaThue = giaThue;
+	}
+	public TuaDia(String maTua, String tenTua, String moTa, int loaiTua, int soNgayThue, double phiTreHan, double giaThue) {
 		super();
 		this.maTua = maTua;
 		this.tenTua = tenTua;
@@ -69,9 +76,10 @@ public class TuaDia {
 		this.loaiTua = loaiTua;
 		this.soNgayThue = soNgayThue;
 		this.phiTreHan = phiTreHan;
+		this.giaThue = giaThue;
 	}
 	
-	public TuaDia(String maTua, String tenTua, String moTa, int loaiTua, int soNgayThue, double phiTreHan,
+	public TuaDia(String maTua, String tenTua, String moTa, int loaiTua, int soNgayThue, double phiTreHan, double giaThue,
 			List<Dia> listDia) {
 		super();
 		this.maTua = maTua;
@@ -80,6 +88,7 @@ public class TuaDia {
 		this.loaiTua = loaiTua;
 		this.soNgayThue = soNgayThue;
 		this.phiTreHan = phiTreHan;
+		this.giaThue = giaThue;
 		this.listDia = listDia;
 	}
 	public TuaDia() {
@@ -111,6 +120,7 @@ public class TuaDia {
 	@Override
 	public String toString() {
 		return "TuaDia [maTua=" + maTua + ", tenTua=" + tenTua + ", moTa=" + moTa + ", loaiTua=" + loaiTua
-				+ ", soNgayThue=" + soNgayThue + ", phiTreHan=" + phiTreHan + ", listDia=" + listDia + "]";
+				+ ", soNgayThue=" + soNgayThue + ", phiTreHan=" + phiTreHan + ", giaThue=" + giaThue + ", listDia="
+				+ listDia + "]";
 	}
 }
