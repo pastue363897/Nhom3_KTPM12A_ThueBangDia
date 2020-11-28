@@ -8,10 +8,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class GeneralCRUD {
-	public static <T> boolean insert(T object, Session session) {
+public class GeneralCRUD<T> {
+	public boolean insert(T object, Session session) {
+		Transaction transaction = null;
 		try {
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			session.save(object);
 			
 			transaction.commit();
@@ -19,13 +20,15 @@ public class GeneralCRUD {
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			transaction.rollback();
 			return false;
 		}
 	}
 	
-	public static <T> boolean update(T object, Session session) {
+	public boolean update(T object, Session session) {
+		Transaction transaction = null;
 		try {
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			session.saveOrUpdate(object);
 			
 			transaction.commit();
@@ -33,13 +36,15 @@ public class GeneralCRUD {
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			transaction.rollback();
 			return false;
 		}
 	}
 	
-	public static <T> boolean delete(T object, Session session) {
+	public boolean delete(T object, Session session) {
+		Transaction transaction = null;
 		try {
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			session.remove(object);
 			
 			transaction.commit();
@@ -47,11 +52,12 @@ public class GeneralCRUD {
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
+			transaction.rollback();
 			return false;
 		}
 	}
 	
-	public static <T> List<T> getAll(Class<T> type, Session session) {
+	public List<T> getAll(Class<T> type, Session session) {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<T> criteria = builder.createQuery(type);
 		criteria.from(type);
