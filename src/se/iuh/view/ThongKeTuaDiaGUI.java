@@ -18,7 +18,19 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import se.iuh.controller.ChiTietPhieuThueController;
+import se.iuh.controller.DatTruocController;
+import se.iuh.controller.DiaController;
+import se.iuh.controller.TuaDiaController;
+import se.iuh.database.HibernateUtil;
+import se.iuh.model.TuaDia;
+
 import java.awt.Rectangle;
+import java.util.List;
 
 public class ThongKeTuaDiaGUI extends JDialog {
 
@@ -28,6 +40,14 @@ public class ThongKeTuaDiaGUI extends JDialog {
 	private JLabel lblDanhSachTD;
 	private JLabel lblThongKeTuaDia;
 	private Component verticalStrut;
+	
+	private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	private Session session = sessionFactory.openSession();
+	private List<TuaDia> listTuaDia;
+	private TuaDiaController tuaDiaController = new TuaDiaController();
+	private ChiTietPhieuThueController ctptController = new ChiTietPhieuThueController();
+	private DiaController diaController = new DiaController();
+	private DatTruocController datTruocController = new DatTruocController();
 
 	/**
 	 * Create the frame.
@@ -76,6 +96,30 @@ public class ThongKeTuaDiaGUI extends JDialog {
 		lblThongKeTuaDia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblThongKeTuaDia.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		contentPane.add(lblThongKeTuaDia, BorderLayout.NORTH);
+		
+		loadDataVaoTable();
 	}
 
+	private void loadDataVaoTable()	{
+		listTuaDia = tuaDiaController.getAll(TuaDia.class, session);
+		int stt = 1;
+		for(TuaDia td : listTuaDia) {
+			int soDiaDangThue = ctptController.getCTPTTChuaTraTheoTuaDia(td.getMaTua(), session).size();
+			int soDiaOnHold = 0;
+			int soDiaTaiCuaHang = diaController.getAllDiaTheoMaTua(td.getMaTua(), session).size() - soDiaOnHold - soDiaDangThue;
+			int soLuongDatTruoc = datTruocController.getDatTruocTheoMaTua(td.getMaTua(), session).size();
+			
+			String[] tx = {
+					String.format("%d", stt++),
+					td.getMaTua(),
+					td.getTenTua(),
+					td.getMoTa(),
+					String.format("%d", soDiaDangThue),
+					String.format("%d", soDiaOnHold),
+					String.format("%d", soDiaTaiCuaHang),
+					String.format("%d", soLuongDatTruoc)
+			};
+			tmTuaDia.addRow(tx);
+		}
+	}
 }

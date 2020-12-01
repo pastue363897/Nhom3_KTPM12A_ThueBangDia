@@ -19,4 +19,12 @@ public class DiaController extends GeneralCRUD<Dia> {
 		List<Dia> list = query.list();
 		return list;
 	}
+	
+	public List<Dia> getAllDiaTheoMaTua(String maTua, Session session) {
+		String hql = "From Dia d where d.tuaDia.maTua = :maTua";
+		Query<Dia> query = session.createQuery(hql);
+		query.setParameter("maTua", maTua);
+		List<Dia> list = query.list();
+		return list;
+	}
 }

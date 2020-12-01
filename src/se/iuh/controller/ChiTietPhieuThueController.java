@@ -32,4 +32,12 @@ public class ChiTietPhieuThueController extends GeneralCRUD<ChiTietPhieuThue> {
 		List<ChiTietPhieuThue> list = query.list();
 		return list;
 	}
+	
+	public List<ChiTietPhieuThue> getCTPTTChuaTraTheoTuaDia(String maTua, Session session) {
+		String hql = "From ChiTietPhieuThue ct where ct.diaThue.tuaDia.maTua = :maTua AND ct.diaThue.maDia NOT IN (select pt.dia.maDia from PhieuTra pt where pt.phieuThue = ct.phieuThue)";
+		Query<ChiTietPhieuThue> query = session.createQuery(hql);
+		query.setParameter("maTua", maTua);
+		List<ChiTietPhieuThue> list = query.list();
+		return list;
+	}
 }
