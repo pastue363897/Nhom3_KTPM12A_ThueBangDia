@@ -12,7 +12,7 @@ public class Dia {
 	@Id
 	private String maDia;
 	@ManyToOne
-	@JoinColumn(name = "maTua")
+	@JoinColumn(name = "tuaDia")
 	private TuaDia tuaDia;
 	private String trangThai;
 	public String getMaDia() {
