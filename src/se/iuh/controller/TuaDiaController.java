@@ -12,12 +12,33 @@ public class TuaDiaController extends GeneralCRUD<TuaDia> {
 	public TuaDia getTuaDia(String maTua, Session session) {
 		return session.get(TuaDia.class, maTua);
 	}
-	
+
 	public List<TuaDia> timKiemTheoTuKhoa(String keyword, Session session) {
 		String hql = "From TuaDia T where maTua LIKE :keyword OR tenTua LIKE :keyword OR moTa LIKE :keyword OR loaiTua LIKE :keyword";
 		Query<TuaDia> query = session.createQuery(hql);
-		query.setParameter("keyword", "%"+keyword+"%");
+		query.setParameter("keyword", "%" + keyword + "%");
 		List<TuaDia> list = query.list();
 		return list;
+	}
+
+	// get all tuaDia - haudx
+	public List<TuaDia> getAllTuaDia(Session session) {
+		List<TuaDia> list = new TuaDiaController().getAll(TuaDia.class, session);
+		return list;
+
+	}
+
+	// Xoa Tua Dia - haudx
+	public boolean xoaTua(String matua, Session session) {
+		TuaDia kh = new TuaDia();
+		kh.setMaTua(matua);
+		delete(kh, session);
+		return true;
+
+	}
+
+	// Them Tua Dia
+	public void themTua(TuaDia tua, Session session) {
+		insert(tua, session);
 	}
 }

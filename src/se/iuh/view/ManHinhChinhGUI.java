@@ -25,6 +25,8 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 	private JMenuItem mntmThongKeKhachHangQuaHan;
 	private JMenuItem mntmThongKeKhachHangNoPhi;
 	private JMenuItem mntmThongKeTuaDia;
+	private JMenuItem mntmThemTuaDia;
+	private JMenuItem mntmXoaTuaDia;
 	/**
 	 * Create the frame.
 	 */
@@ -85,10 +87,12 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		JMenu mnTuaDia = new JMenu("Tựa đĩa");
 		menuBar.add(mnTuaDia);
 		
-		JMenuItem mntmThemTuaDia = new JMenuItem("Thêm tựa đĩa");
+		mntmThemTuaDia = new JMenuItem("Thêm tựa đĩa");
+		mntmThemTuaDia.addActionListener(this);
 		mnTuaDia.add(mntmThemTuaDia);
 		
-		JMenuItem mntmXoaTuaDia = new JMenuItem("Xóa tựa đĩa");
+		mntmXoaTuaDia = new JMenuItem("Quản lý / xóa tựa đĩa");
+		mntmXoaTuaDia.addActionListener(this);
 		mnTuaDia.add(mntmXoaTuaDia);
 		
 		JMenuItem mntmYeuCauTuaDiaMoi = new JMenuItem("Yêu cầu thêm tựa đĩa mới");
@@ -147,6 +151,14 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		}
 		else if(e.getSource().equals(mntmThongKeTuaDia)) {
 			ThongKeTuaDiaGUI frame = new ThongKeTuaDiaGUI(this);
+			frame.setVisible(true);
+		}
+		else if(e.getSource().equals(mntmThemTuaDia)) {
+			ThemTuaJDialog frame = new ThemTuaJDialog(this);
+			frame.setVisible(true);
+		}
+		else if(e.getSource().equals(mntmXoaTuaDia)) {
+			QuanLyTua frame = new QuanLyTua(this);
 			frame.setVisible(true);
 		}
 	}
