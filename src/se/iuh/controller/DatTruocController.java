@@ -11,7 +11,7 @@ public class DatTruocController extends GeneralCRUD<DatTruoc> {
 
 	
 	public List<DatTruoc> getDatTruocTheoMaTua(String maTua, Session session) {
-		String hql = "From DatTruoc d where d.diaDatTruoc.tuaDia.maTua = :maTua";
+		String hql = "From DatTruoc d where d.tuaDatTruoc.maTua = :maTua";
 		Query<DatTruoc> query = session.createQuery(hql);
 		query.setParameter("maTua", maTua);
 		List<DatTruoc> list = query.list();

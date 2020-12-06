@@ -14,8 +14,8 @@ public class DatTruoc {
 	@Id
 	private String maDatTruoc;
 	@ManyToOne
-	@JoinColumn(name = "diaDatTruoc")
-	private Dia diaDatTruoc;
+	@JoinColumn(name = "tuaDatTruoc")
+	private TuaDia tuaDatTruoc;
 	private Date thoiGianLap;
 	@ManyToOne
 	@JoinColumn(name = "khachHang")
@@ -26,11 +26,11 @@ public class DatTruoc {
 	public void setMaDatTruoc(String maDatTruoc) {
 		this.maDatTruoc = maDatTruoc;
 	}
-	public Dia getDiaDatTruoc() {
-		return diaDatTruoc;
+	public TuaDia getTuaDatTruoc() {
+		return tuaDatTruoc;
 	}
-	public void setDiaDatTruoc(Dia diaDatTruoc) {
-		this.diaDatTruoc = diaDatTruoc;
+	public void setTuaDatTruoc(TuaDia tuaDatTruoc) {
+		this.tuaDatTruoc = tuaDatTruoc;
 	}
 	public Date getThoiGianLap() {
 		return thoiGianLap;
@@ -44,10 +44,10 @@ public class DatTruoc {
 	public void setKhachHang(KhachHang khachHang) {
 		this.khachHang = khachHang;
 	}
-	public DatTruoc(String maDatTruoc, Dia diaDatTruoc, Date thoiGianLap, KhachHang khachHang) {
+	public DatTruoc(String maDatTruoc, TuaDia tuaDatTruoc, Date thoiGianLap, KhachHang khachHang) {
 		super();
 		this.maDatTruoc = maDatTruoc;
-		this.diaDatTruoc = diaDatTruoc;
+		this.tuaDatTruoc = tuaDatTruoc;
 		this.thoiGianLap = thoiGianLap;
 		this.khachHang = khachHang;
 	}
@@ -57,7 +57,7 @@ public class DatTruoc {
 	}
 	@Override
 	public String toString() {
-		return "DatTruoc [maDatTruoc=" + maDatTruoc + ", diaDatTruoc=" + diaDatTruoc + ", thoiGianLap=" + thoiGianLap
+		return "DatTruoc [maDatTruoc=" + maDatTruoc + ", tuaDatTruoc=" + tuaDatTruoc + ", thoiGianLap=" + thoiGianLap
 				+ ", khachHang=" + khachHang + "]";
 	}
 	@Override
