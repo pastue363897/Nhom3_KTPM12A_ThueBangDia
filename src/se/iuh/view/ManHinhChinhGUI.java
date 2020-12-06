@@ -27,6 +27,7 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 	private JMenuItem mntmThongKeTuaDia;
 	private JMenuItem mntmThemTuaDia;
 	private JMenuItem mntmXoaTuaDia;
+	private JMenuItem mntmLapPhieuTra;
 	/**
 	 * Create the frame.
 	 */
@@ -46,7 +47,8 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		JMenuItem mntmLapPhieuThue = new JMenuItem("Lập phiếu thuê");
 		mnThueDia.add(mntmLapPhieuThue);
 		
-		JMenuItem mntmLapPhieuTra = new JMenuItem("Lập phiếu trả");
+		mntmLapPhieuTra = new JMenuItem("Lập phiếu trả");
+		mntmLapPhieuTra.addActionListener(this);
 		mnThueDia.add(mntmLapPhieuTra);
 		
 		JMenuItem mntmHuyPhiTraMuon = new JMenuItem("Hủy phí trả muộn");
@@ -159,6 +161,10 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		}
 		else if(e.getSource().equals(mntmXoaTuaDia)) {
 			QuanLyTua frame = new QuanLyTua(this);
+			frame.setVisible(true);
+		}
+		else if(e.getSource().equals(mntmLapPhieuTra)) {
+			LapPhieuTraGUI frame = new LapPhieuTraGUI(this);
 			frame.setVisible(true);
 		}
 	}
