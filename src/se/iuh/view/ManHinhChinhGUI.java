@@ -1,23 +1,26 @@
 package se.iuh.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import se.iuh.utility.GlobalConfig;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import java.awt.Dimension;
-
 public class ManHinhChinhGUI extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1791912629040857293L;
 	private JPanel contentPane;
 	private JMenuItem mntmThemDia;
 	private JMenuItem mntmXoaDia;
@@ -31,7 +34,9 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 	private JMenuItem mntmLapPhieuThue;
 	private JMenuItem mntmXemPTHKhachHang;
 	private JMenuItem mntmThemTTDatTruoc;
-	
+	private JMenuItem mntmHuyPhiTraMuon;
+	private JMenuItem mntmDangXuat;
+
 	/**
 	 * Create the frame.
 	 */
@@ -56,8 +61,11 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		mntmLapPhieuTra.addActionListener(this);
 		mnThueDia.add(mntmLapPhieuTra);
 
-		JMenuItem mntmHuyPhiTraMuon = new JMenuItem("Hủy phí trả muộn");
-		mnThueDia.add(mntmHuyPhiTraMuon);
+		mntmHuyPhiTraMuon = new JMenuItem("Hủy phí trả muộn");
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmHuyPhiTraMuon.addActionListener(this);
+			mnThueDia.add(mntmHuyPhiTraMuon);
+		}
 
 		JMenu mnDatTruoc = new JMenu("Đặt trước");
 		menuBar.add(mnDatTruoc);
@@ -80,59 +88,78 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 
 		JMenuItem mntmXoaKhachHang = new JMenuItem("Xóa khách hàng");
 		mnKhachHang.add(mntmXoaKhachHang);
-		
+
 		mntmXemPTHKhachHang = new JMenuItem("Xem phí trễ hạn");
 		mntmXemPTHKhachHang.addActionListener(this);
 		mnKhachHang.add(mntmXemPTHKhachHang);
 
 		JMenu mnDia = new JMenu("Đĩa");
-		menuBar.add(mnDia);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			menuBar.add(mnDia);
+		}
 
 		mntmThemDia = new JMenuItem("Thêm đĩa");
-		mntmThemDia.addActionListener(this);
-		mnDia.add(mntmThemDia);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThemDia.addActionListener(this);
+			mnDia.add(mntmThemDia);
+		}
 
 		mntmXoaDia = new JMenuItem("Xem danh sách / xóa đĩa");
-		mntmXoaDia.addActionListener(this);
-		mnDia.add(mntmXoaDia);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmXoaDia.addActionListener(this);
+			mnDia.add(mntmXoaDia);
+		}
 
 		JMenu mnTuaDia = new JMenu("Tựa đĩa");
 		menuBar.add(mnTuaDia);
 
-		mntmThemTuaDia = new JMenuItem("Thêm tựa đĩa");
-		mntmThemTuaDia.addActionListener(this);
-		mnTuaDia.add(mntmThemTuaDia);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThemTuaDia = new JMenuItem("Thêm tựa đĩa");
+			mntmThemTuaDia.addActionListener(this);
+			mnTuaDia.add(mntmThemTuaDia);
 
-		mntmXoaTuaDia = new JMenuItem("Quản lý / xóa tựa đĩa");
-		mntmXoaTuaDia.addActionListener(this);
-		mnTuaDia.add(mntmXoaTuaDia);
+			mntmXoaTuaDia = new JMenuItem("Quản lý / xóa tựa đĩa");
+			mntmXoaTuaDia.addActionListener(this);
+			mnTuaDia.add(mntmXoaTuaDia);
+		}
 
 		JMenuItem mntmYeuCauTuaDiaMoi = new JMenuItem("Yêu cầu thêm tựa đĩa mới");
 		mnTuaDia.add(mntmYeuCauTuaDiaMoi);
 
 		JMenu mnThongKe = new JMenu("Thống kê");
-		menuBar.add(mnThongKe);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			menuBar.add(mnThongKe);
+		}
 
 		mntmThongKeKhachHangTatCa = new JMenuItem("Thống kê tất cả khách hàng");
-		mntmThongKeKhachHangTatCa.addActionListener(this);
-		mnThongKe.add(mntmThongKeKhachHangTatCa);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThongKeKhachHangTatCa.addActionListener(this);
+			mnThongKe.add(mntmThongKeKhachHangTatCa);
+		}
 
 		mntmThongKeKhachHangQuaHan = new JMenuItem("Thống kê khách hàng đang mượn quá hạn");
-		mntmThongKeKhachHangQuaHan.addActionListener(this);
-		mnThongKe.add(mntmThongKeKhachHangQuaHan);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThongKeKhachHangQuaHan.addActionListener(this);
+			mnThongKe.add(mntmThongKeKhachHangQuaHan);
+		}
 
 		mntmThongKeKhachHangNoPhi = new JMenuItem("Thống kê khách hàng nợ phí");
-		mntmThongKeKhachHangNoPhi.addActionListener(this);
-		mnThongKe.add(mntmThongKeKhachHangNoPhi);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThongKeKhachHangNoPhi.addActionListener(this);
+			mnThongKe.add(mntmThongKeKhachHangNoPhi);
+		}
 
 		mntmThongKeTuaDia = new JMenuItem("Thống kê tựa đĩa");
-		mntmThongKeTuaDia.addActionListener(this);
-		mnThongKe.add(mntmThongKeTuaDia);
+		if (GlobalConfig.loaiUser == GlobalConfig.USER_ADMIN) {
+			mntmThongKeTuaDia.addActionListener(this);
+			mnThongKe.add(mntmThongKeTuaDia);
+		}
 
 		JMenu mnTaiKhoan = new JMenu("Tài khoản");
 		menuBar.add(mnTaiKhoan);
 
-		JMenuItem mntmDangXuat = new JMenuItem("Đăng xuất");
+		mntmDangXuat = new JMenuItem("Đăng xuất");
+		mntmDangXuat.addActionListener(this);
 		mnTaiKhoan.add(mntmDangXuat);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -178,6 +205,21 @@ public class ManHinhChinhGUI extends JFrame implements ActionListener {
 		} else if (e.getSource().equals(mntmThemTTDatTruoc)) {
 			ThemDatTruocGUI frame = new ThemDatTruocGUI(this);
 			frame.setVisible(true);
+		} else if (e.getSource().equals(mntmHuyPhiTraMuon)) {
+			HuyPhiTreHanGUI frame = new HuyPhiTreHanGUI(this);
+			frame.setVisible(true);
+		} else if (e.getSource().equals(mntmDangXuat)) {
+			dispose();
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						DangNhapGUI frame = new DangNhapGUI();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 
