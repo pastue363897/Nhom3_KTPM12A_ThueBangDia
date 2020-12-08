@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import se.iuh.model.ChiTietPhieuThue;
 
 public class ChiTietPhieuThueController extends GeneralCRUD<ChiTietPhieuThue> {
+	
 	public List<ChiTietPhieuThue> getCTPTTheoMaKH(String maKH, Session session) {
 		String hql = "From ChiTietPhieuThue ct where ct.phieuThue.khachHang.maKH = :maKH";
 		Query<ChiTietPhieuThue> query = session.createQuery(hql);

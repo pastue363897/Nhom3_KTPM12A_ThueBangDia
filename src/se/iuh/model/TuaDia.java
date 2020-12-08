@@ -120,7 +120,6 @@ public class TuaDia {
 	@Override
 	public String toString() {
 		return "TuaDia [maTua=" + maTua + ", tenTua=" + tenTua + ", moTa=" + moTa + ", loaiTua=" + loaiTua
-				+ ", soNgayThue=" + soNgayThue + ", phiTreHan=" + phiTreHan + ", giaThue=" + giaThue + ", listDia="
-				+ listDia + "]";
+				+ ", soNgayThue=" + soNgayThue + ", phiTreHan=" + phiTreHan + ", giaThue=" + giaThue + "]";
 	}
 }

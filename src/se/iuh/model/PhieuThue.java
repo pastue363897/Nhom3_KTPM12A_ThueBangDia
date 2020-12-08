@@ -1,8 +1,9 @@
 package se.iuh.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +23,7 @@ public class PhieuThue {
 	@JoinColumn(name = "nhanVien")
 	private NhanVien nhanVien;
 	private Date ngayThue;
-	@OneToMany(mappedBy = "phieuThue")
+	@OneToMany(mappedBy = "phieuThue", cascade = CascadeType.ALL)
 	private List<ChiTietPhieuThue> listCTPT;
 	public String getMaPhieuThue() {
 		return maPhieuThue;

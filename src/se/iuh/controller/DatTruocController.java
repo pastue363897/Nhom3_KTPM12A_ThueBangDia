@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import se.iuh.model.DatTruoc;
 
 public class DatTruocController extends GeneralCRUD<DatTruoc> {
-
 	
 	public List<DatTruoc> getDatTruocTheoMaTua(String maTua, Session session) {
 		String hql = "From DatTruoc d where d.tuaDatTruoc.maTua = :maTua";
@@ -17,4 +16,9 @@ public class DatTruocController extends GeneralCRUD<DatTruoc> {
 		List<DatTruoc> list = query.list();
 		return list;
 	}
+	
+	public void themDatTruoc(DatTruoc datTruoc, Session session) {
+		insert(datTruoc, session);
+	}
+	
 }

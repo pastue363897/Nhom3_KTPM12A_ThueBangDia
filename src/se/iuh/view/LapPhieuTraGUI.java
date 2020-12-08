@@ -1,37 +1,43 @@
 package se.iuh.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import se.iuh.controller.ChiTietPhieuThueController;
+import se.iuh.controller.DatTruocController;
+import se.iuh.controller.DiaController;
+import se.iuh.controller.KhachHangController;
 import se.iuh.controller.PhiTreHanController;
 import se.iuh.controller.PhieuTraController;
+import se.iuh.controller.TuaDiaController;
 import se.iuh.database.HibernateUtil;
 import se.iuh.model.ChiTietPhieuThue;
+import se.iuh.model.DatTruoc;
+import se.iuh.model.Dia;
+import se.iuh.model.KhachHang;
 import se.iuh.model.PhiTreHan;
 import se.iuh.model.PhieuTra;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.Box;
-import java.awt.Component;
+import se.iuh.model.TuaDia;
 
 public class LapPhieuTraGUI extends JDialog implements ActionListener {
 
@@ -47,8 +53,13 @@ public class LapPhieuTraGUI extends JDialog implements ActionListener {
 	private ChiTietPhieuThueController ctptController = new ChiTietPhieuThueController();
 	private PhiTreHanController phiTreHanController = new PhiTreHanController();
 	private PhieuTraController phieuTraController = new PhieuTraController();
+	private DatTruocController datTruocController = new DatTruocController();
+	private TuaDiaController tuaDiaController = new TuaDiaController();
+	private DiaController diaController = new DiaController();
+	private KhachHangController khachHangController = new KhachHangController();
 	private boolean coTreHan = false;
 	private ChiTietPhieuThue ctptDangChon;
+	private double tongTien;
 
 	/**
 	 * Create the frame.
@@ -137,6 +148,7 @@ public class LapPhieuTraGUI extends JDialog implements ActionListener {
 		horizontalBox_2.add(btnTraDia);
 
 		ctptDangChon = null;
+		tongTien = 0;
 	}
 
 	@Override
@@ -157,7 +169,11 @@ public class LapPhieuTraGUI extends JDialog implements ActionListener {
 								"Khách hàng này đang nợ phí trễ hạn, muốn chuyển qua thanh toán?", "Thông báo",
 								JOptionPane.YES_NO_OPTION);
 						if (option == JOptionPane.YES_OPTION) {
-							// gọi mở giao diện thanh toán phí trễ hạn
+							for (PhiTreHan phiTreHan : listPTH) {
+								tongTien += phiTreHan.getPhiTreHan();
+							}
+							GhiNhanTraPhiTreHanGUI frame = new GhiNhanTraPhiTreHanGUI(listPTH,String.valueOf(tongTien));
+							frame.setVisible(true);
 						}
 					}
 				}
@@ -203,7 +219,31 @@ public class LapPhieuTraGUI extends JDialog implements ActionListener {
 				}
 				else {
 					JOptionPane.showMessageDialog(this, "Trả đĩa thành công");
-					this.dispose();
+					// gan trang thai dia la on-hold
+					Dia dia = diaController.getDia(txtMaDia.getText().toString(), session);
+					TuaDia tuaDia = tuaDiaController.getTuaDia(dia.getTuaDia().getMaTua(), session);
+					List<DatTruoc> listDT = new ArrayList<DatTruoc>();
+					listDT = datTruocController.getDatTruocTheoMaTua(tuaDia.getMaTua(), session);
+					if (listDT != null) {
+						if (listDT.size() > 0) {
+							int option = JOptionPane.showConfirmDialog(this,
+									"Đĩa này có tựa đề thuộc danh sách khách hàng đặt trước. Nhấn yes để xem", "Thông báo",
+									JOptionPane.YES_NO_OPTION);
+							if (option == JOptionPane.YES_OPTION) {
+								List<KhachHang> listKH = new ArrayList<KhachHang>();
+								for (DatTruoc datTruoc : listDT) {
+									KhachHang kh = khachHangController.getKhachHang(datTruoc.getKhachHang().getMaKH(), session);
+									listKH.add(kh);
+								}
+								this.dispose();
+								GanDiaChoKhachHangGUI frame = new GanDiaChoKhachHangGUI(listKH, tuaDia.getTenTua());
+								frame.setVisible(true);
+								dia.setTrangThai("đang tạm giữ");
+							}else {
+								this.dispose();
+							}
+						}
+					}
 				}
 			}
 		}

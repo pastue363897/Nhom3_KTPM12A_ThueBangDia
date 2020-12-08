@@ -1,17 +1,15 @@
 package se.iuh.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ChiTietPhieuThue")
-//@IdClass(PK_Dia_PhieuThue.class)
 public class ChiTietPhieuThue {
 	@Id
 	private String maCTPT;
